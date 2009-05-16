@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 import ldap
 import re
 
@@ -31,6 +31,8 @@ def connect(conf):
         for uri in conf['uri']:
                 try:
                         con = ldap.initialize(uri)
+			if conf.get('ssl',['on'])[0].lower() == 'start_tls':
+				con.start_tls_s()
                         con.simple_bind_s(*creds)
                         return con
                 except:
