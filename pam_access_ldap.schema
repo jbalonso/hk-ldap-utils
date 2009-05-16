@@ -1,0 +1,6 @@
+attributetype ( 1.1.2.1.1 NAME 'pamAccessGrant' DESC 'TRUE if access to be granted, FALSE if to be denied' EQUALITY booleanMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 SINGLE-VALUE )
+attributetype ( 1.1.2.1.2 NAME 'pamAccessSequence' DESC 'Sequence number for pam_access rule' EQUALITY integerMatch ORDERING integerOrderingMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+attributetype ( 1.1.2.1.3 NAME 'pamAccessEntity' DESC 'Entity addressed in pam_access rule' EQUALITY distinguishedNameMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 )
+attributetype ( 1.1.2.1.4 NAME 'pamAccessOrigins' DESC 'Origins string in pam_access rule' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+attributetype ( 1.1.2.1.5 NAME 'pamAccessHost' DESC 'Host string for applying pam_access rule' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+objectclass ( 1.1.2.2.1 NAME 'pamAccessRecord' DESC 'A pam_access record' STRUCTURAL SUP top MUST ( cn $ pamAccessSequence $ pamAccessGrant $ pamAccessOrigins ) MAY ( pamAccessEntity $ pamAccessHost ) )
