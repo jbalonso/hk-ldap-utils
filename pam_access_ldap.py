@@ -5,6 +5,7 @@ import re
 class config:
         LDAP_CONF = '/etc/ldap.conf'
         LDAP_SECRET = '/etc/ldap.secret'
+        TARGET_DEFAULT = '/etc/security/access.conf'
 
 def read_conf():
         ldap_conf = open(config.LDAP_CONF)
@@ -41,9 +42,9 @@ def find_entries(conf, con):
         host = conf['pam_access_host'][0]
         scope = ldap.SCOPE_ONELEVEL
         filter = '(&(objectClass=pamAccessRecord)(|(!(pamAccessHost=*))(pamAccessHost=%s)))' % host
-        entries = con.search_s(base, scope, '(objectClass=pamAccessRecord)')
+        entries = con.search_s(base, scope, filter)
         entries = [entry[1] for entry in entries]
-        entries.sort(key=lambda x: x['pamAccessSequence'][0])
+        entries.sort(key=lambda x: int(x['pamAccessSequence'][0]))
         return entries
 
 def format_entry(entry):
@@ -61,9 +62,19 @@ def format_entry(entry):
 
         return '%s:%s:%s' % (grant, ' '.join(names), ' '.join(origins))
 
-def get_entries():
+def get_entries(conf, con):
+        text = [format_entry(ent) for ent in find_entries(conf, con)]
+        return text
+
+def write_target(conf, entries):
+        fn = conf.get('pam_access_target', config.TARGET_DEFAULT)
+        assert len(entries) > 0, 'New configuration must have at least one entry.'
+        out_file = open( fn, 'w' )
+        out_file.writelines(['%s\n' % ent for ent in entries])
+
+if __name__ == '__main__':
         conf = read_conf()
         con = connect(conf)
-        text = [format_entry(ent) for ent in find_entries(conf, con)]
-        for txt in text: print txt
+        entries = get_entries(conf, con)
         con.unbind_s()
+        write_target(conf, entries)
