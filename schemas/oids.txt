@@ -1,0 +1,43 @@
+1.3.6.1.4.1.33578...
+
+.1.1.1 (pamAccess)
+.1.1.1.1 (attributes)
+.1.1.1.1.1 pamAccessGrant
+.1.1.1.1.2 pamAccessSequence
+.1.1.1.1.3 pamAccessEntity
+.1.1.1.1.4 pamAccessOrigins
+.1.1.1.1.5 pamAccessHost
+.1.1.1.2 (object classes)
+.1.1.1.2.1 pamAccessRecord
+
+.1.1.2 (mail)
+.1.1.2.1 (attributes)
+.1.1.2.1.1 mailAlias
+.1.1.2.1.2 mailAliasedName
+.1.1.2.2 (object classes)
+.1.1.2.2.1 mailDomain
+.1.1.2.2.2 mailAlias
+.1.1.2.2.3 mailClient
+
+.1.1.3 (exports)
+.1.1.3.1 (attributes)
+.1.1.3.1.1 exportsPath
+.1.1.3.1.2 exportsClientPattern
+.1.1.3.1.3 exportsOption
+.1.1.3.1.4 exportsHost
+.1.1.3.2 (object classes)
+.1.1.3.2.1 exportsPoint
+.1.1.3.2.2 exportsClient
+
+.1.1.4 (hkAuth)
+.1.1.4.1 (attributes)
+.1.1.4.1.1 hkAuthLabel 
+.1.1.4.1.2 hkAuthSecret
+.1.1.4.1.3 hkAuthAlgorithm
+.1.1.4.1.4 hkAuthDigits
+.1.1.4.1.5 hkAuthCounter [hkAuthHOTP required]
+.1.1.4.1.6 hkAuthPeriod [hkAuthTOTP optional]
+.1.1.4.2 (object classes)
+.1.1.4.2.1 hkAuthOTPBase [abstract base class]
+.1.1.4.2.2 hkAuthHOTP
+.1.1.4.2.3 hkAuthTOTP
