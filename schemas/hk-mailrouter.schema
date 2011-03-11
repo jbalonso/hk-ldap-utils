@@ -1,0 +1,5 @@
+attributetype ( 1.3.6.1.4.1.33578.1.1.2.1.1 NAME 'mailAlias' DESC 'Mail router alias' SUP name )
+attributetype ( 1.3.6.1.4.1.33578.1.1.2.1.2 NAME 'mailAliasedName' DESC 'Mail router aliased name' SUP name )
+objectclass ( 1.3.6.1.4.1.33578.1.1.2.2.1 NAME 'mailDomain' DESC 'Mail router virtual domain' SUP domain STRUCTURAL MUST dc MAY description )
+objectclass ( 1.3.6.1.4.1.33578.1.1.2.2.2 NAME 'mailAlias' DESC 'Mail alias' SUP top STRUCTURAL MUST ( mailAlias $ mailAliasedName ) MAY ( description $ dc ) )
+objectclass (1.3.6.1.4.1.33578.1.1.2.2.3 NAME 'mailClient' DESC 'Mail client account' SUP top STRUCTURAL MUST ( cn $ userPassword ) )
