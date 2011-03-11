@@ -1,0 +1,74 @@
+attributetype ( 1.3.6.1.4.1.33578.1.1.4.1 
+	NAME 'hkAuthLabel' 
+	DESC 'Label for authenticator entry' 
+	EQUALITY caseExactMatch 
+	ORDERING caseExactOrderingMatch 
+	SUBSTR caseExactSubstringsMatch 
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.44 
+ )
+
+attributetype ( 1.3.6.1.4.1.33578.1.1.4.2 
+	NAME 'hkAuthSecret' 
+	DESC 'Authenticator shared secret' 
+	EQUALITY octetStringMatch 
+	ORDERING octetStringOrderingMatch 
+	SUBSTR octetStringSubstringsMatch 
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 
+	SINGLE-VALUE 
+ )
+
+attributetype ( 1.3.6.1.4.1.33578.1.1.4.3 
+	NAME 'hkAuthAlgorithm' 
+	DESC 'Hash algorithm for authenticator' 
+	EQUALITY caseIgnoreMatch 
+	ORDERING caseIgnoreOrderingMatch 
+	SUBSTR caseIgnoreSubstringsMatch 
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.44 
+	SINGLE-VALUE 
+ )
+
+attributetype ( 1.3.6.1.4.1.33578.1.1.4.4 
+	NAME 'hkAuthDigits' 
+	DESC 'Number of digits yielded by authenticator' 
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 
+	SINGLE-VALUE 
+ )
+
+attributetype ( 1.3.6.1.4.1.33578.1.1.4.1.5 
+	NAME 'hkAuthCounter' 
+	DESC 'Counter for HOTP authenticators' 
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 
+	SINGLE-VALUE 
+ )
+
+attributetype ( 1.3.6.1.4.1.33578.1.1.4.1.6 
+	NAME 'hkAuthPeriod' 
+	DESC 'Time window size for TOTP authenticators' 
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 
+	SINGLE-VALUE 
+ )
+
+objectclass ( 1.3.6.1.4.1.33578.1.1.4.2.1 
+	NAME 'hkAuthOTPBase' 
+	DESC 'Base class for authenticator configurations' 
+	SUP top 
+	ABSTRACT 
+	MUST ( hkAuthAlgorithm $ hkAuthDigits $ hkAuthLabel $ hkAuthSecret ) 
+ )
+
+objectclass ( 1.3.6.1.4.1.33578.1.1.4.2.2 
+	NAME 'hkAuthHOTP' 
+	DESC 'Configuration for HOTP (counter) authenticators' 
+	SUP hkAuthOTPBase 
+	STRUCTURAL 
+	MUST hkAuthCounter 
+ )
+
+objectclass ( 1.3.6.1.4.1.33578.1.1.4.2.3 
+	NAME 'hkAuthTOTP' 
+	DESC 'Configuration for TOTP (time) authenticators' 
+	SUP hkAuthOTPBase 
+	STRUCTURAL 
+	MUST hkAuthPeriod 
+ )
+
